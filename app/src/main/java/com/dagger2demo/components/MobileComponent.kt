@@ -5,7 +5,7 @@ import com.dagger2demo.classess.Mobile
 import com.dagger2demo.classess.Processor
 import dagger.Component
 
-@Component
-interface MobileComponent {
+@Component(modules = [Battery::class, Processor::class])
+public interface MobileComponent {
     fun getMobile(): Mobile
 }

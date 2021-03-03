@@ -1,7 +1,7 @@
 package com.mvvmdaggerroomdb.viewmodels
 
 import androidx.lifecycle.ViewModel
-import com.devcoder.mvvmexpectlevel.repository.LoginRepository
+import com.mvvmdaggerroomdb.repository.DashboardRepository
 
-class DashBoardViewModel(private val repository: LoginRepository) : ViewModel() {
+class DashBoardViewModel(private val repository: DashboardRepository) : ViewModel() {
 }

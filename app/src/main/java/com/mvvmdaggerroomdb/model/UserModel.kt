@@ -2,23 +2,31 @@ package com.mvvmdaggerroomdb.model
 
 import android.os.Parcel
 import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import com.mvvmdaggerroomdb.util.AppConstant
 
+const val CURRENT_USER_ID=0
+
+@Entity(tableName = AppConstant.TABLE_USER)
 data class UserModel(
-    val id: String?,
-    var name: String?,
-    var address: String?,
-    var country: String?
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = CURRENT_USER_ID,
+    var name: String? = null,
+    var address: String? = null,
+    var country: String? = null
 ) : Parcelable {
+
+
     constructor(parcel: Parcel) : this(
-        parcel.readString(),
+        parcel.readInt(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString()
     ) {
     }
-
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(id)
+        parcel.writeInt(id)
         parcel.writeString(name)
         parcel.writeString(address)
         parcel.writeString(country)

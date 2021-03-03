@@ -7,6 +7,7 @@
     android:background="@color/purple_500">
 
     <TextView
+        android:id="@+id/tvTitle"
         style="@style/MatchMatchParent.TextViewBold"
         android:layout_marginStart="@dimen/_10sdp"
         android:gravity="center_vertical"

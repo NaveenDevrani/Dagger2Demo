@@ -4,12 +4,12 @@ import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.mvvmdaggerroomdb.model.UserModel
-import com.mvvmdaggerroomdb.repository.AddDetailRepository
+import com.mvvmdaggerroomdb.repository.AppRepository
 import com.mvvmdaggerroomdb.util.AppConstant
 import com.mvvmdaggerroomdb.util.Coroutines
 import com.mvvmdaggerroomdb.util.Util
 
-class AddDetailViewModel(private val repository: AddDetailRepository?) : ViewModel() {
+class AddDetailViewModel(private val repository: AppRepository?) : ViewModel() {
     var validationError: MutableLiveData<Int> = MutableLiveData()
     var successObserver: MutableLiveData<Boolean> = MutableLiveData()
     var userModel = UserModel()

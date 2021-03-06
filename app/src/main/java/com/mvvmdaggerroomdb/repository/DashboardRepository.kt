@@ -1,7 +1,7 @@
 package com.mvvmdaggerroomdb.repository
 
-class DashboardRepository() : BaseRepository() {
-    suspend fun getData(username: String, password: String) =
-        safeApiCall {
-        }
+import com.mvvmdaggerroomdb.database.AppDataBase
+
+class DashboardRepository(val dataBase: AppDataBase) : BaseRepository() {
+    suspend fun getAllUser() = dataBase.getUserDao().getUserAll()
 }

@@ -17,25 +17,42 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginStart="@dimen/_30sdp"
         tools:context="com.mvvmdaggerroomdb.fragment.AddDetailFragment">
 
-        <include
-            android:id="@+id/appbar"
-            layout="@layout/appbar"
-            android:visibility="gone" />
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="165dp"
+            android:layout_height="202dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/login_bg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_60sdp"
+            android:text="@string/add_profile"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_28ssp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/editTextName"
             style="@style/Edit_Text"
             android:layout_marginStart="@dimen/_30sdp"
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_40sdp"
             android:layout_marginEnd="@dimen/_30sdp"
             android:hint="@string/name"
             android:inputType="textPersonName"
             android:text="@={viewModel.userModel.name}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/appbar" />
+            app:layout_constraintTop_toBottomOf="@id/imageView" />
 
         <EditText
             android:id="@+id/editTextAddress"
@@ -55,8 +72,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_30sdp"
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_30sdp"
             android:layout_marginEnd="@dimen/_30sdp"
+            android:background="@drawable/button_one"
             android:onClick="@{viewModel::onSubmit}"
             android:text="@string/submit"
             app:layout_constraintTop_toBottomOf="@id/editTextAddress" />

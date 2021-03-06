@@ -6,10 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.dagger2demo.R
+import com.dagger2demo.databinding.FragmentShowDetailBinding
+import com.mvvmdaggerroomdb.base.BaseFragment
+import com.mvvmdaggerroomdb.database.AppDataBase
 import com.mvvmdaggerroomdb.model.UserModel
+import com.mvvmdaggerroomdb.network.ApiService
+import com.mvvmdaggerroomdb.network.RemoteDataSource
+import com.mvvmdaggerroomdb.repository.AppRepository
 import com.mvvmdaggerroomdb.util.AppConstant
+import com.mvvmdaggerroomdb.viewmodels.AddDetailViewModel
 
-class ShowDetailFragment : Fragment() {
+class ShowDetailFragment : BaseFragment<AddDetailViewModel, FragmentShowDetailBinding, AppRepository>() {
     private var userModel: UserModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,11 +26,16 @@ class ShowDetailFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_show_detail, container, false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        arguments?.let {
+            userModel = it.getParcelable(AppConstant.KEY_MODEL)
+        }
+
+        userModel?.let {
+            binding.lifecycleOwner = this
+            binding.user = it
+        }
     }
 
     companion object {
@@ -35,5 +47,16 @@ class ShowDetailFragment : Fragment() {
                     putParcelable(AppConstant.KEY_MODEL, userModel)
                 }
             }
+
+        fun getInstance(bundle: Bundle?) = ShowDetailFragment().apply { arguments = bundle }
+
+    }
+
+    override fun getViewModel() = AddDetailViewModel::class.java
+
+    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentShowDetailBinding.inflate(inflater, container, false)
+
+    override fun getFragmentRepository(): AppRepository {
+        return AppRepository(RemoteDataSource().buildApi(ApiService::class.java), AppDataBase.invoke())
     }
 }

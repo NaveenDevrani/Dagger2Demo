@@ -13,13 +13,12 @@ import com.mvvmdaggerroomdb.database.AppDataBase
 import com.mvvmdaggerroomdb.model.UserModel
 import com.mvvmdaggerroomdb.network.ApiService
 import com.mvvmdaggerroomdb.network.RemoteDataSource
-import com.mvvmdaggerroomdb.repository.AddDetailRepository
+import com.mvvmdaggerroomdb.repository.AppRepository
 import com.mvvmdaggerroomdb.util.AppConstant
 import com.mvvmdaggerroomdb.viewmodels.AddDetailViewModel
 import kotlinx.android.synthetic.main.fragment_add_detail.*
-import java.util.*
 
-class AddDetailFragment : BaseFragment<AddDetailViewModel, FragmentAddDetailBinding, AddDetailRepository>() {
+class AddDetailFragment : BaseFragment<AddDetailViewModel, FragmentAddDetailBinding, AppRepository>() {
     private var userModel: UserModel? = null
     private var isEdit: Boolean? = null
 
@@ -79,8 +78,8 @@ class AddDetailFragment : BaseFragment<AddDetailViewModel, FragmentAddDetailBind
         })
     }
 
-    override fun getFragmentRepository(): AddDetailRepository {
-        return AddDetailRepository(RemoteDataSource().buildApi(ApiService::class.java), AppDataBase.invoke())
+    override fun getFragmentRepository(): AppRepository {
+        return AppRepository(RemoteDataSource().buildApi(ApiService::class.java), AppDataBase.invoke())
     }
 
     fun next() {

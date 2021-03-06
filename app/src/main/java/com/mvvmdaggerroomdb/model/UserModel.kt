@@ -6,7 +6,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.mvvmdaggerroomdb.util.AppConstant
 
-const val CURRENT_USER_ID=0
+const val CURRENT_USER_ID = 0
 
 @Entity(tableName = AppConstant.TABLE_USER)
 data class UserModel(
@@ -25,6 +25,7 @@ data class UserModel(
         parcel.readString()
     ) {
     }
+
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(id)
         parcel.writeString(name)
@@ -44,6 +45,15 @@ data class UserModel(
         override fun newArray(size: Int): Array<UserModel?> {
             return arrayOfNulls(size)
         }
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other?.javaClass != javaClass) return false
+
+        other as UserModel
+
+        return other.id == this.id
     }
 
 }

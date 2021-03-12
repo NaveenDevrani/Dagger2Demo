@@ -1,12 +1,24 @@
 package com.mvvmdaggerroomdb.activity
 
-import android.app.Application
 import android.content.Context
+import com.mvvmdaggerroomdb.dagger.component.AppComponent
+import com.mvvmdaggerroomdb.dagger.component.DaggerAppComponent
+import dagger.android.AndroidInjector
+import dagger.android.DaggerApplication
 
-class AppActivity : Application() {
+class AppActivity : DaggerApplication() {
+
+    lateinit var appComponent: AppComponent
+
     override fun onCreate() {
         super.onCreate()
         mApplication = this
+        appComponent.inject(this)
+    }
+
+    override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
+        appComponent = DaggerAppComponent.builder().application(this).build()
+        return appComponent
     }
 
     companion object {

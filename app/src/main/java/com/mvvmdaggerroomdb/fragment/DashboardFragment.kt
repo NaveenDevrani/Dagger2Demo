@@ -3,12 +3,12 @@ package com.mvvmdaggerroomdb.fragment
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,23 +19,25 @@ import com.mvvmdaggerroomdb.UserItemClickListener
 import com.mvvmdaggerroomdb.activity.AddDetailActivity
 import com.mvvmdaggerroomdb.activity.ShowDetailActivity
 import com.mvvmdaggerroomdb.adapter.UserAdapter
-import com.mvvmdaggerroomdb.database.AppDataBase
 import com.mvvmdaggerroomdb.factories.ViewModelFactory
 import com.mvvmdaggerroomdb.model.UserModel
-import com.mvvmdaggerroomdb.network.ApiService
-import com.mvvmdaggerroomdb.network.RemoteDataSource
-import com.mvvmdaggerroomdb.repository.AppRepository
 import com.mvvmdaggerroomdb.util.AppConstant
 import com.mvvmdaggerroomdb.util.ViewUtil.hide
 import com.mvvmdaggerroomdb.util.ViewUtil.show
 import com.mvvmdaggerroomdb.viewmodels.DashBoardViewModel
+import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_dashboard.*
+import javax.inject.Inject
 
-class DashboardFragment : Fragment(),UserItemClickListener {
+class DashboardFragment : Fragment(), UserItemClickListener {
 
     private var viewModel: DashBoardViewModel? = null
     private var myAdapter: UserAdapter? = null
     private var binding: FragmentDashboardBinding? = null
+
+    @Inject
+    lateinit var factory: ViewModelFactory
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.fragment_dashboard, container, false)
         return binding?.root
@@ -43,14 +45,9 @@ class DashboardFragment : Fragment(),UserItemClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val repository = AppRepository(RemoteDataSource().buildApi(ApiService::class.java), AppDataBase.invoke())
-        val factory = ViewModelFactory(repository)
+        AndroidSupportInjection.inject(this)
         viewModel = ViewModelProvider(this, factory).get(DashBoardViewModel::class.java)
         handleClick()
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
         setRecyclerView()
         handleObserver()
     }
@@ -104,6 +101,10 @@ class DashboardFragment : Fragment(),UserItemClickListener {
             }
         })
 
+        viewModel?.deleteUserObserver?.observe(viewLifecycleOwner, {
+            getAllUser()
+        })
+
         getAllUser()
     }
 
@@ -130,17 +131,17 @@ class DashboardFragment : Fragment(),UserItemClickListener {
         }
     }
 
-    override  fun onEdit(user: UserModel, position: Int) {
+    override fun onEdit(user: UserModel, position: Int) {
         activity?.let {
             val bundle = Bundle()
             bundle.putParcelable(AppConstant.KEY_MODEL, user)
+            bundle.putBoolean(AppConstant.IS_EDIT, true)
             startActivityForResult(Intent(it, AddDetailActivity::class.java).putExtras(bundle), AppConstant.UPDATE_REQUEST_CODE)
         }
     }
 
-    override  fun onDelete(user: UserModel, position: Int) {
-
+    override fun onDelete(user: UserModel, position: Int) {
+        viewModel?.deleteUser(user)
     }
-
 
 }

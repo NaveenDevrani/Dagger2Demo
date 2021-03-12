@@ -9,6 +9,4 @@ object Coroutines {
         CoroutineScope(Dispatchers.Main).launch {
             work()
         }
-
-
 }

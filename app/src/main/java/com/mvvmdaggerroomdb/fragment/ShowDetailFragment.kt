@@ -9,15 +9,20 @@ import com.dagger2demo.R
 import com.dagger2demo.databinding.FragmentShowDetailBinding
 import com.mvvmdaggerroomdb.base.BaseFragment
 import com.mvvmdaggerroomdb.database.AppDataBase
+import com.mvvmdaggerroomdb.factories.ViewModelFactory
 import com.mvvmdaggerroomdb.model.UserModel
 import com.mvvmdaggerroomdb.network.ApiService
 import com.mvvmdaggerroomdb.network.RemoteDataSource
 import com.mvvmdaggerroomdb.repository.AppRepository
 import com.mvvmdaggerroomdb.util.AppConstant
 import com.mvvmdaggerroomdb.viewmodels.AddDetailViewModel
+import javax.inject.Inject
 
-class ShowDetailFragment : BaseFragment<AddDetailViewModel, FragmentShowDetailBinding, AppRepository>() {
+class ShowDetailFragment : BaseFragment<AddDetailViewModel, FragmentShowDetailBinding>() {
     private var userModel: UserModel? = null
+
+    @Inject
+    lateinit var factory: ViewModelFactory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +40,7 @@ class ShowDetailFragment : BaseFragment<AddDetailViewModel, FragmentShowDetailBi
         userModel?.let {
             binding.lifecycleOwner = this
             binding.user = it
+            binding.executePendingBindings()
         }
     }
 
@@ -55,8 +61,6 @@ class ShowDetailFragment : BaseFragment<AddDetailViewModel, FragmentShowDetailBi
     override fun getViewModel() = AddDetailViewModel::class.java
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentShowDetailBinding.inflate(inflater, container, false)
+    override fun getViewModelFactory() = factory
 
-    override fun getFragmentRepository(): AppRepository {
-        return AppRepository(RemoteDataSource().buildApi(ApiService::class.java), AppDataBase.invoke())
-    }
 }

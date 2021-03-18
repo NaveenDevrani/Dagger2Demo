@@ -37,11 +37,14 @@ class UserAdapter(var clickListener: UserItemClickListener?) : RecyclerView.Adap
             binding.setVariable(BR.viewModel, user)
             binding.executePendingBindings()
             binding.cardView.setOnClickListener {
+                clickListener?.onClickItem(user)
             }
 
             binding.ivDelete.setOnClickListener {
+                clickListener?.onDelete(user, adapterPosition)
             }
             binding.ivEdit.setOnClickListener {
+                clickListener?.onEdit(user, adapterPosition)
             }
         }
     }

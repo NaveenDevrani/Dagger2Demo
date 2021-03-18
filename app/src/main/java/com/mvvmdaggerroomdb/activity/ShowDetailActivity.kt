@@ -1,18 +1,19 @@
 package com.mvvmdaggerroomdb.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.dagger2demo.R
+import com.mvvmdaggerroomdb.base.BaseActivity
 import com.mvvmdaggerroomdb.fragment.ShowDetailFragment
 
-class ShowDetailActivity : AppCompatActivity() {
+class ShowDetailActivity : BaseActivity() {
     var fragment: ShowDetailFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_show_detail)
         fragment = ShowDetailFragment.getInstance(bundle = intent.extras)
+        callFragment(fragment!!)
     }
 
     private fun callFragment(fragment: Fragment) {

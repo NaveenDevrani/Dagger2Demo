@@ -1,9 +1,6 @@
 package com.mvvmdaggerroomdb.database
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.room.*
-import com.mvvmdaggerroomdb.model.CURRENT_USER_ID
 import com.mvvmdaggerroomdb.model.UserModel
 import com.mvvmdaggerroomdb.util.AppConstant
 
@@ -14,14 +11,14 @@ interface UserDao {
     suspend fun saveUser(user: UserModel): Long
 
     @Query("SELECT *FROM ${AppConstant.TABLE_USER}")
-    suspend fun getUserAll():List<UserModel>?
-
-//    @Query("SELECT *FROM ${AppConstant.TABLE_USER} WHERE id=$CURRENT_USER_ID")
-//    fun getUser(): MutableLiveData<UserModel?>
+    suspend fun getUserAll(): List<UserModel>?
 
     @Update
-    fun updateUser(user: UserModel)
+    suspend fun updateUser(user: UserModel): Int
 
     @Delete
-    fun deleteUser(user: UserModel)
+    suspend fun deleteUser(user: UserModel): Int
+
+//    @Query("DELETE FROM ${AppConstant.TABLE_USER}")
+//    suspend fun deleteAllUser(user: UserModel): Int
 }

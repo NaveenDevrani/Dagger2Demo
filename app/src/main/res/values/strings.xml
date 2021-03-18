@@ -11,5 +11,6 @@
     <string name="required">*required</string>
     <string name="no_user_found">No User Found</string>
     <string name="add_profile">Add Profile</string>
+    <string name="update_profile">Update Profile</string>
     <string name="users">Users</string>
 </resources>

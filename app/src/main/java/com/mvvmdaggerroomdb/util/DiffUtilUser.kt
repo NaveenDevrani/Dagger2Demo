@@ -35,4 +35,6 @@ class DiffUtilUser(var newList: ArrayList<UserModel>, var oldList: ArrayList<Use
         //you can return particular field for changed item.
         return if (bundle.size() == 0) null else bundle
     }
+
+
 }

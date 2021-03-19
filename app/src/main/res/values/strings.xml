@@ -6,11 +6,16 @@
     <string name="name_">Name:</string>
     <string name="Address">Address</string>
     <string name="Address_">Address:</string>
-    <string name="Country">Country</string>
+    <string name="country">Country</string>
+    <string name="country_">Country:</string>
     <string name="submit">Submit</string>
     <string name="required">*required</string>
     <string name="no_user_found">No User Found</string>
     <string name="add_profile">Add Profile</string>
     <string name="update_profile">Update Profile</string>
     <string name="users">Users</string>
+    <string name="country_empty_error">Please Select Country</string>
+    <string name="user_save_message">User Detail Save Successfully</string>
+    <string name="user_update_message">User Detail Update Successfully</string>
+    <string name="something_wrong_error">Something went wrong please try again</string>
 </resources>

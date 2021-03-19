@@ -6,7 +6,7 @@ import com.mvvmdaggerroomdb.dagger.component.DaggerAppComponent
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 
-class AppActivity : DaggerApplication() {
+class AndroidApplication : DaggerApplication() {
 
     lateinit var appComponent: AppComponent
 
@@ -22,7 +22,7 @@ class AppActivity : DaggerApplication() {
     }
 
     companion object {
-        var mApplication: Context? = null
-        fun getContext(): Context = mApplication!!.applicationContext
+        lateinit var mApplication: Context
+        fun getContext(): Context = mApplication.applicationContext
     }
 }

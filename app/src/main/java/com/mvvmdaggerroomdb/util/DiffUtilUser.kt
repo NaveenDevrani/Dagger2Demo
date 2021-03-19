@@ -29,12 +29,10 @@ class DiffUtilUser(var newList: ArrayList<UserModel>, var oldList: ArrayList<Use
 
         val bundle = Bundle()
         if (!oldList[oldItemPosition].equals(newList[newItemPosition])) {
-            bundle.putParcelable(AppConstant.KEY_MODEL, newList[newItemPosition])
+            bundle.putParcelable(AppConstant.KEY_USER_MODEL, newList[newItemPosition])
         }
 
-        //you can return particular field for changed item.
         return if (bundle.size() == 0) null else bundle
     }
-
 
 }

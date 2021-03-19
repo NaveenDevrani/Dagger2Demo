@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -71,18 +73,16 @@ class DashboardFragment : Fragment(), UserItemClickListener {
             }
             this.adapter = myAdapter
         }
-
     }
 
     companion object {
         @JvmStatic
-        fun newInstance() =
-            DashboardFragment()
+        fun newInstance() = DashboardFragment()
     }
 
     private fun handleClick() {
         addButton?.setOnClickListener {
-            startActivityForResult(Intent(context, AddDetailActivity::class.java), AppConstant.UPDATE_REQUEST_CODE)
+            startForResult.launch(Intent(context, AddDetailActivity::class.java))
         }
     }
 
@@ -112,36 +112,33 @@ class DashboardFragment : Fragment(), UserItemClickListener {
         viewModel?.getUser()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        when (requestCode) {
-            AppConstant.UPDATE_REQUEST_CODE -> {
-                if (resultCode == Activity.RESULT_OK) {
-                    getAllUser()
-                }
-            }
-        }
-    }
-
     override fun onClickItem(user: UserModel) {
         activity?.let {
             val bundle = Bundle()
-            bundle.putParcelable(AppConstant.KEY_MODEL, user)
-            startActivityForResult(Intent(it, ShowDetailActivity::class.java).putExtras(bundle), AppConstant.UPDATE_REQUEST_CODE)
+            bundle.putParcelable(AppConstant.KEY_USER_MODEL, user)
+            val intent = Intent(it, ShowDetailActivity::class.java).also { intent -> intent.putExtras(bundle) }
+            startForResult.launch(intent)
         }
     }
 
     override fun onEdit(user: UserModel, position: Int) {
         activity?.let {
             val bundle = Bundle()
-            bundle.putParcelable(AppConstant.KEY_MODEL, user)
+            bundle.putParcelable(AppConstant.KEY_USER_MODEL, user)
             bundle.putBoolean(AppConstant.IS_EDIT, true)
-            startActivityForResult(Intent(it, AddDetailActivity::class.java).putExtras(bundle), AppConstant.UPDATE_REQUEST_CODE)
+            val intent = Intent(it, AddDetailActivity::class.java).putExtras(bundle)
+            startForResult.launch(intent)
         }
     }
 
     override fun onDelete(user: UserModel, position: Int) {
         viewModel?.deleteUser(user)
+    }
+
+    private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            getAllUser()
+        }
     }
 
 }

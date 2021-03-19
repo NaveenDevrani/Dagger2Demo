@@ -1,19 +1,13 @@
 package com.mvvmdaggerroomdb.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.dagger2demo.R
 import com.dagger2demo.databinding.FragmentShowDetailBinding
 import com.mvvmdaggerroomdb.base.BaseFragment
-import com.mvvmdaggerroomdb.database.AppDataBase
 import com.mvvmdaggerroomdb.factories.ViewModelFactory
 import com.mvvmdaggerroomdb.model.UserModel
-import com.mvvmdaggerroomdb.network.ApiService
-import com.mvvmdaggerroomdb.network.RemoteDataSource
-import com.mvvmdaggerroomdb.repository.AppRepository
 import com.mvvmdaggerroomdb.util.AppConstant
 import com.mvvmdaggerroomdb.viewmodels.AddDetailViewModel
 import javax.inject.Inject
@@ -27,14 +21,14 @@ class ShowDetailFragment : BaseFragment<AddDetailViewModel, FragmentShowDetailBi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            userModel = it.getParcelable(AppConstant.KEY_MODEL)
+            userModel = it.getParcelable(AppConstant.KEY_USER_MODEL)
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.let {
-            userModel = it.getParcelable(AppConstant.KEY_MODEL)
+            userModel = it.getParcelable(AppConstant.KEY_USER_MODEL)
         }
 
         userModel?.let {
@@ -50,7 +44,7 @@ class ShowDetailFragment : BaseFragment<AddDetailViewModel, FragmentShowDetailBi
         fun newInstance(userModel: UserModel) =
             ShowDetailFragment().apply {
                 arguments = Bundle().apply {
-                    putParcelable(AppConstant.KEY_MODEL, userModel)
+                    putParcelable(AppConstant.KEY_USER_MODEL, userModel)
                 }
             }
 

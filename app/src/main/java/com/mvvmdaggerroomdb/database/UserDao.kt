@@ -18,7 +18,4 @@ interface UserDao {
 
     @Delete
     suspend fun deleteUser(user: UserModel): Int
-
-//    @Query("DELETE FROM ${AppConstant.TABLE_USER}")
-//    suspend fun deleteAllUser(user: UserModel): Int
 }

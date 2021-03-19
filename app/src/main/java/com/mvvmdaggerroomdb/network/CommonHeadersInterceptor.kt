@@ -6,7 +6,6 @@ import okhttp3.Response
 import javax.inject.Inject
 
 /**
-
  * This class contains code which will add all the common headers which needs to be sent in every
  * api call. Adds common headers like x-platform-code, x-version-code etc to the request.
  */

@@ -1,23 +1,20 @@
 package com.mvvmdaggerroomdb.fragment
 
-import android.R.string
 import android.app.Activity
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import com.dagger2demo.R
 import com.dagger2demo.databinding.FragmentAddDetailBinding
 import com.mvvmdaggerroomdb.activity.AddDetailActivity
 import com.mvvmdaggerroomdb.base.BaseFragment
 import com.mvvmdaggerroomdb.factories.ViewModelFactory
-import com.mvvmdaggerroomdb.model.CountryModel
 import com.mvvmdaggerroomdb.model.UserModel
 import com.mvvmdaggerroomdb.util.AppConstant
+import com.mvvmdaggerroomdb.util.Util
 import com.mvvmdaggerroomdb.viewmodels.AddDetailViewModel
 import kotlinx.android.synthetic.main.fragment_add_detail.*
 import javax.inject.Inject
@@ -33,7 +30,7 @@ class AddDetailFragment : BaseFragment<AddDetailViewModel, FragmentAddDetailBind
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            userModel = it.getParcelable(AppConstant.KEY_MODEL)
+            userModel = it.getParcelable(AppConstant.KEY_USER_MODEL)
             isEdit = it.getBoolean(AppConstant.IS_EDIT)
         }
     }
@@ -61,7 +58,7 @@ class AddDetailFragment : BaseFragment<AddDetailViewModel, FragmentAddDetailBind
         fun newInstance(userModel: UserModel, isEdit: Boolean) =
             AddDetailFragment().apply {
                 arguments = Bundle().apply {
-                    putParcelable(AppConstant.KEY_MODEL, userModel)
+                    putParcelable(AppConstant.KEY_USER_MODEL, userModel)
                     putBoolean(AppConstant.IS_EDIT, isEdit)
                 }
             }
@@ -78,19 +75,31 @@ class AddDetailFragment : BaseFragment<AddDetailViewModel, FragmentAddDetailBind
         viewModel.validationError.observe(viewLifecycleOwner,
             {
                 when (it) {
-                    1 -> {
+                    AppConstant.KEY_NAME -> {
                         editTextName?.error = getString(R.string.required)
                         editTextName?.requestFocus()
                     }
-                    2 -> {
+
+                    AppConstant.KEY_ADDRESS -> {
                         editTextAddress?.error = getString(R.string.required)
                         editTextAddress?.requestFocus()
                     }
+
+                    AppConstant.KEY_COUNTRY ->
+                        Util.showToast(getString(R.string.country_empty_error))
                 }
             })
 
         viewModel.countryObserver.observe(viewLifecycleOwner, {
-            Log.i("Country list", "country->$it")
+            it?.let {
+                val countryList = ArrayList<String>()
+                it.forEach { countryModel ->
+                    if (!countryModel.name.isNullOrEmpty()) {
+                        countryList.add(countryModel.name)
+                    }
+                }
+                handleSpinner(countryList)
+            }
         })
 
         viewModel.successObserver.observe(viewLifecycleOwner, {
@@ -107,17 +116,26 @@ class AddDetailFragment : BaseFragment<AddDetailViewModel, FragmentAddDetailBind
     override fun getViewModelFactory() = factory
 
 
-//    private fun handleSpinner(list: List<CountryModel>) {
-//        val arrayAdapter: ArrayAdapter<String> = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, arrayList)
-//        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-//        spinner.adapter = arrayAdapter
-//        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-//            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-//                val tutorialsName: string = parent.getItemAtPosition(position).toString()
-//                Toast.makeText(parent.context, "Selected: $tutorialsName", Toast.LENGTH_LONG).show()
-//            }
-//
-//            override fun onNothingSelected(parent: AdapterView<*>?) {}
-//        }
-//    }
+    private fun handleSpinner(list: List<String>) {
+        context?.let {
+            val arrayAdapter: ArrayAdapter<String> = ArrayAdapter<String>(it, android.R.layout.simple_spinner_item, list)
+            arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            spinner?.adapter = arrayAdapter
+            spinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                    viewModel.userModel.country = parent.getItemAtPosition(position).toString()
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+            }
+            if (isEdit) {
+                list.forEachIndexed { index, s ->
+                    if (s == userModel?.country ?: "") {
+                        spinner?.setSelection(index)
+                        return@forEachIndexed
+                    }
+                }
+            }
+        }
+    }
 }

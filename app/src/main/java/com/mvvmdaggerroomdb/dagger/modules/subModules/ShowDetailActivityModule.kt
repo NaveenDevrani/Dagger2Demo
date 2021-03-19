@@ -2,8 +2,6 @@ package com.mvvmdaggerroomdb.dagger.modules.subModules
 
 
 import com.mvvmdaggerroomdb.dagger.FragmentScope
-import com.mvvmdaggerroomdb.fragment.AddDetailFragment
-import com.mvvmdaggerroomdb.fragment.DashboardFragment
 import com.mvvmdaggerroomdb.fragment.ShowDetailFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector

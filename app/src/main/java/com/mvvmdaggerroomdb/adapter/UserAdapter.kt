@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.dagger2demo.BR
 import com.dagger2demo.R
 import com.dagger2demo.databinding.ItemUserBinding
 import com.mvvmdaggerroomdb.UserItemClickListener
@@ -23,9 +22,7 @@ class UserAdapter(var clickListener: UserItemClickListener?) : RecyclerView.Adap
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val user = userList[position]
-
         holder.bind(user)
-        holder.binding.user = user
     }
 
     override fun getItemCount(): Int {
@@ -34,7 +31,7 @@ class UserAdapter(var clickListener: UserItemClickListener?) : RecyclerView.Adap
 
     inner class ViewHolder(val binding: ItemUserBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(user: UserModel) {
-            binding.setVariable(BR.viewModel, user)
+            binding.user = user
             binding.executePendingBindings()
             binding.cardView.setOnClickListener {
                 clickListener?.onClickItem(user)

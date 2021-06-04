@@ -14,7 +14,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 /**
-
  * This class is dagger module and is used to get Reference of the 'Auth' screens related network
  * call apis interface.
  */

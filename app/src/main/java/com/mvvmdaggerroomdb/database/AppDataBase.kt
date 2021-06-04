@@ -3,7 +3,7 @@ package com.mvvmdaggerroomdb.database
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.mvvmdaggerroomdb.activity.AppActivity
+import com.mvvmdaggerroomdb.activity.AndroidApplication
 import com.mvvmdaggerroomdb.model.UserModel
 
 const val DATABASE_NAME = "myDatabase.db"
@@ -28,7 +28,7 @@ abstract class AppDataBase : RoomDatabase() {
 
         private fun buildDatabase() =
             Room.databaseBuilder(
-                AppActivity.getContext(), AppDataBase::class.java,
+                AndroidApplication.getContext(), AppDataBase::class.java,
                 DATABASE_NAME
             ).build()
     }

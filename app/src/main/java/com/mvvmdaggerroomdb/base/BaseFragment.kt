@@ -9,15 +9,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.mvvmdaggerroomdb.factories.ViewModelFactory
-import com.mvvmdaggerroomdb.network.RemoteDataSource
-import com.mvvmdaggerroomdb.repository.AppRepository
-import com.mvvmdaggerroomdb.repository.BaseRepository
 import dagger.android.support.AndroidSupportInjection
 
 abstract class BaseFragment<VM : ViewModel, B : ViewBinding> : Fragment() {
     lateinit var binding: B
     lateinit var viewModel: VM
-    protected var remoteDataSource = RemoteDataSource()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         AndroidSupportInjection.inject(this)
@@ -28,6 +24,5 @@ abstract class BaseFragment<VM : ViewModel, B : ViewBinding> : Fragment() {
 
     abstract fun getViewModel(): Class<VM>
     abstract fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?): B
-//    abstract fun getFragmentRepository(): R
     abstract fun getViewModelFactory(): ViewModelFactory
 }

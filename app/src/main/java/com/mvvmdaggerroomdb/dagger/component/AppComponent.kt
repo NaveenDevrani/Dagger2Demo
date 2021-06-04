@@ -1,16 +1,12 @@
 package com.mvvmdaggerroomdb.dagger.component
 
 import android.app.Application
-import com.mvvmdaggerroomdb.activity.AppActivity
-import com.mvvmdaggerroomdb.activity.DashboardActivity
+import com.mvvmdaggerroomdb.activity.AndroidApplication
 import com.mvvmdaggerroomdb.dagger.ActivityBuilderModule
 import com.mvvmdaggerroomdb.dagger.NetworkModule
 import com.mvvmdaggerroomdb.dagger.modules.AppModule
-import com.mvvmdaggerroomdb.dagger.modules.ViewModelModule
-import com.mvvmdaggerroomdb.factories.ViewModelFactory
 import dagger.BindsInstance
 import dagger.Component
-import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
 import javax.inject.Singleton
@@ -23,7 +19,7 @@ import javax.inject.Singleton
         ActivityBuilderModule::class,
         NetworkModule::class]
 )
-interface AppComponent : AndroidInjector<AppActivity> {
+interface AppComponent : AndroidInjector<AndroidApplication> {
 
     @Component.Builder
     interface Builder {

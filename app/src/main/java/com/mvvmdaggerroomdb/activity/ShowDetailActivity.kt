@@ -7,13 +7,13 @@ import com.mvvmdaggerroomdb.base.BaseActivity
 import com.mvvmdaggerroomdb.fragment.ShowDetailFragment
 
 class ShowDetailActivity : BaseActivity() {
-    var fragment: ShowDetailFragment? = null
+    lateinit var fragment: ShowDetailFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_show_detail)
         fragment = ShowDetailFragment.getInstance(bundle = intent.extras)
-        callFragment(fragment!!)
+        callFragment(fragment)
     }
 
     private fun callFragment(fragment: Fragment) {
@@ -23,12 +23,12 @@ class ShowDetailActivity : BaseActivity() {
         fragmentTransaction.commit()
     }
 
-    fun goToDashboard(isResult: Int) {
-        setResult(isResult)
+    private fun goToDashboard() {
+        setResult(RESULT_CANCELED)
         finish()
     }
 
     override fun onBackPressed() {
-        goToDashboard(RESULT_CANCELED)
+        goToDashboard()
     }
 }

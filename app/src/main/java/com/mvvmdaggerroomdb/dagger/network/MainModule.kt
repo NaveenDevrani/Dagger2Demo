@@ -31,7 +31,7 @@ class MainModule {
             .create()
 
         return Retrofit.Builder()
-            .baseUrl("https://api.printful.com/")
+            .baseUrl("http://api.printful.com/")
             .client(client)
             .addConverterFactory(GsonConverterFactory.create(updatedGson))
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

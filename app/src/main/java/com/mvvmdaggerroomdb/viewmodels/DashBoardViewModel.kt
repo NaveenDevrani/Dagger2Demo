@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.mvvmdaggerroomdb.model.UserModel
 import com.mvvmdaggerroomdb.repository.AppRepository
-import com.mvvmdaggerroomdb.repository.DashboardRepository
 import com.mvvmdaggerroomdb.util.Coroutines
 import javax.inject.Inject
 

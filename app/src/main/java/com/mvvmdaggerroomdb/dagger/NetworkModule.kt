@@ -12,7 +12,6 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 /**
-
  * This class is dagger module and is used to get Reference of the all the instances related to
  * network api calls.
  */

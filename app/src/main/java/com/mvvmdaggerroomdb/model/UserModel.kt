@@ -53,7 +53,9 @@ data class UserModel(
 
         other as UserModel
 
-        return other.id == this.id && other.name == this.name && other.address == this.address
+        return other.id == this.id && other.name == this.name &&
+                other.address == this.address &&
+                other.country == this.country
     }
 
 }

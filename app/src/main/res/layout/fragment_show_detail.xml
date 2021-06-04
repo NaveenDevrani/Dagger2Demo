@@ -72,6 +72,29 @@
                 app:layout_constraintTop_toBottomOf="@+id/tvName"
                 tools:text="@string/Address" />
 
+            <TextView
+                android:id="@+id/country"
+                style="@style/MatchWrap.TextViewBold"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="@string/country_"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/address" />
+
+            <TextView
+                android:id="@+id/tvCountry"
+                style="@style/MatchWrap.TextViewBold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="@{user.country}"
+                android:textColor="@color/black"
+                android:textStyle="italic"
+                app:layout_constraintStart_toEndOf="@id/country"
+                app:layout_constraintTop_toBottomOf="@+id/tvAddress"
+                tools:text="@string/country" />
 
             <ImageView
                 android:id="@+id/ivEdit"
